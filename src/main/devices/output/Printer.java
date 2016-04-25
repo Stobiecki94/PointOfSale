@@ -1,6 +1,5 @@
 package main.devices.output;
 
-
 import main.model.Product;
 import main.model.Receipt;
 

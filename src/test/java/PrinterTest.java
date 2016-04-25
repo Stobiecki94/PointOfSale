@@ -1,7 +1,6 @@
 package test.java;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -61,8 +60,8 @@ public class PrinterTest {
 	@Before
 	public void setUpBefore(){
 		 printStream = System.out;
-	        byteArrayOutputStream = new ByteArrayOutputStream();
-	        System.setOut(new PrintStream(byteArrayOutputStream));
+	     byteArrayOutputStream = new ByteArrayOutputStream();
+	     System.setOut(new PrintStream(byteArrayOutputStream));
 		receipt=new Receipt();
 	}
 	
@@ -97,13 +96,14 @@ public class PrinterTest {
 	}
 	
 	@Test
-	public void test() {
+	public void checkReceipt() {
+		//when
 		receipt.addProduct(product1);
         receipt.addProduct(product2);
         receipt.addProduct(product3);
         receipt.addProduct(product4);
-        printer.print(receipt);
-        
+        //then
+        assertThat(receipt.getSumPrice()).isEqualTo(29.95);
 	}
 
 }

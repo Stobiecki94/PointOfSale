@@ -13,8 +13,6 @@ import org.junit.Test;
 import main.model.Product;
 import main.model.Receipt;
 
-
-
 public class ReceiptTest {
   
 	private static Product product1;

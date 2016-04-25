@@ -22,17 +22,21 @@ public class BaseOfProductTest {
 	@BeforeClass
 	public static void setUp(){
 		Map<Integer, Product> baseOfProducts = new HashMap<>();
+		
 		firstProduct = mock(Product.class);
         when(firstProduct.getName()).thenReturn("First product");
         when(firstProduct.getPrice()).thenReturn(10.0);
         when(firstProduct.getBarCode()).thenReturn(new BarCode("11"));
+        
         baseOfProducts.put(1, firstProduct);
         baseOfProduct = new BaseOfProduct(baseOfProducts);
 	}
 
 	@Test 
 	public void shouldFindProduct() throws ProductNotFoundException{
+		//when
         Product product = baseOfProduct.findProduct(new BarCode("11"));
+        //then
         assertThat(product).isEqualTo(firstProduct);
 	}
 	

@@ -1,6 +1,5 @@
 package main.model;
 
-//import exception.*;
 
 public class BarCode {
 

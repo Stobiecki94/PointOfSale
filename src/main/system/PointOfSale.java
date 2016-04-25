@@ -54,7 +54,6 @@ public class PointOfSale {
 		display.showProduct(product);
 	}
 	
-	
 	public void nextTransaction(){
 		receipt=new Receipt();
 	}

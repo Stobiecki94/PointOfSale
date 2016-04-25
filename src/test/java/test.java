@@ -1,13 +1,7 @@
 package test.java;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.channels.ShutdownChannelGroupException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import main.devices.input.BarCodeDevice;
 import main.devices.output.DisplayLCD;
@@ -21,7 +15,6 @@ public class test {
 
 	 
 	public static void main(String[] args) {
-		
 		baseOfProduct = new BaseOfProduct(getProductTable());
 		pointOfSale = new PointOfSale(display,printer, barCodeDevice,  baseOfProduct);
 		showBaseOfProducts();
