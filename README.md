@@ -1,5 +1,5 @@
 # PointOfSale
-Point Of Sale IMPAQ
+Point Of Sale 
 
 Implement a simple point of sale.
 
