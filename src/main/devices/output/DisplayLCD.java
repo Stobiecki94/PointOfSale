@@ -1,10 +1,9 @@
 package main.devices.output;
 
-
 import main.model.Product;
 import main.model.Receipt;
 
-public class DisplayLCD extends MessageOutPutDevice implements DisplayDevice{
+public class DisplayLCD extends MessageOutputDevice implements DisplayDevice{
 
 	@Override
 	public void showSummary(Receipt receipt) {
@@ -23,5 +22,4 @@ public class DisplayLCD extends MessageOutPutDevice implements DisplayDevice{
 	public void showMessageInvalidBarCode() {
 		System.out.println(INCORRECT_BARCODE);
 	}
-
 }

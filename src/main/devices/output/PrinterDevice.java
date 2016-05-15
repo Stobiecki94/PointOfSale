@@ -3,7 +3,6 @@ package main.devices.output;
 import main.model.Receipt;
 
 public interface PrinterDevice {
-
-    void print(Receipt receipt);
 	
+    void print(Receipt receipt);
 }

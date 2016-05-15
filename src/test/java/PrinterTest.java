@@ -1,6 +1,7 @@
 package test.java;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,13 +25,10 @@ public class PrinterTest {
     static BarCodeDevice barCodeDevice;
 	private static Printer printer;
 	private static Receipt receipt;
-	private static Product product1;
-    private static Product product2;
-    private static Product product3;
-    private static Product product4;
+	private static Product product1, product2, product3, product4;
 	
 	@BeforeClass
-	public static void setUp(){
+	public static void setUpBeforeClass(){
 		printer=new Printer();
 		receipt=new Receipt();
 		
@@ -75,28 +73,27 @@ public class PrinterTest {
         String printStreamExpected = new StringBuilder()
                 .append(main.devices.output.Printer.HEADER)
                 .append("Mleko")
-                .append(main.devices.output.MessageOutPutDevice.TAB)
+                .append(main.devices.output.MessageOutputDevice.TAB)
                 .append(2.0)
                 .append("\n")
                 .append("Napoj")
-                .append(main.devices.output.MessageOutPutDevice.TAB)
+                .append(main.devices.output.MessageOutputDevice.TAB)
                 .append(5.45)
                 .append("\n")
                 .append("Kawior")
-                .append(main.devices.output.MessageOutPutDevice.TAB)
+                .append(main.devices.output.MessageOutputDevice.TAB)
                 .append(22.0)
-                .append("\n")
-                .append("\n")
-                .append(main.devices.output.MessageOutPutDevice.SUMA+
-                		main.devices.output.MessageOutPutDevice.TAB+
-                		receipt.getSumPrice().toString())
+                .append("\n\n")
+                .append(main.devices.output.MessageOutputDevice.SUMA)
+                .append(main.devices.output.MessageOutputDevice.TAB)
+                .append(receipt.getSumPrice().toString())
                 .toString();
         //then
-        assertThat(byteArrayOutputStream.toString()).isEqualTo(printStreamExpected);
+        assertEquals(byteArrayOutputStream.toString(),printStreamExpected);
 	}
 	
 	@Test
-	public void checkReceipt() {
+	public void testSumReceipt() {
 		//when
 		receipt.addProduct(product1);
         receipt.addProduct(product2);
@@ -105,5 +102,4 @@ public class PrinterTest {
         //then
         assertThat(receipt.getSumPrice()).isEqualTo(29.95);
 	}
-
 }

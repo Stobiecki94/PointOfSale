@@ -1,6 +1,5 @@
 package main.model;
 
-
 public class BarCode {
 
 	private String code=null;
@@ -28,5 +27,4 @@ public class BarCode {
 	public boolean equals(String barCode){
 		return code==barCode;
 	}
-	
 }

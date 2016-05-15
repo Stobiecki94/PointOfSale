@@ -12,7 +12,7 @@ public class BarCodeDevice implements BarCodeScanner{
 		if(inputBarCode != null && !inputBarCode.isEmpty())
 			return new BarCode(inputBarCode);
 		else{
-			throw new InvalidBarCodeException(inputBarCode);
+			throw new InvalidBarCodeException("Barcode "+inputBarCode+" is invalid");
 		}	
 	}
 }

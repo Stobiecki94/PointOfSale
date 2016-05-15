@@ -1,10 +1,10 @@
 package main.system;
 
-import main.exception.InvalidBarCodeException;
-import main.exception.ProductNotFoundException;
 import main.devices.input.BarCodeDevice;
 import main.devices.output.DisplayLCD;
 import main.devices.output.Printer;
+import main.exception.InvalidBarCodeException;
+import main.exception.ProductNotFoundException;
 import main.model.BarCode;
 import main.model.BaseOfProduct;
 import main.model.Product;
@@ -29,20 +29,18 @@ public class PointOfSale {
 	}
 	
 	public void checkOperation(String inputBarCode){
-		try{
+		try {
 			scan(inputBarCode);
 		}
-		catch(InvalidBarCodeException e)
-		{
+		catch(InvalidBarCodeException e) {
 			display.showMessageInvalidBarCode();
 		}
-		catch(ProductNotFoundException e)
-		{
+		catch(ProductNotFoundException e) {
 			display.showMessageProductNotFound();
 		}
 	}
 	
-	private void scan(String inputBarCode) throws InvalidBarCodeException, ProductNotFoundException{
+	public void scan(String inputBarCode) throws InvalidBarCodeException, ProductNotFoundException{
 		BarCode barCode =barCodeDevice.readBarcode(inputBarCode);
 		if(barCode.equals(EXIT_CODE)){
 			display.showSummary(receipt);
@@ -57,7 +55,4 @@ public class PointOfSale {
 	public void nextTransaction(){
 		receipt=new Receipt();
 	}
-	
-	
-	
 }

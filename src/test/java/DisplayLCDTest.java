@@ -1,20 +1,22 @@
 package test.java;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.exception.InvalidBarCodeException;
-import main.exception.ProductNotFoundException;
 import main.devices.input.BarCodeDevice;
 import main.devices.output.DisplayLCD;
+import main.exception.InvalidBarCodeException;
+import main.exception.ProductNotFoundException;
 import main.model.BarCode;
 import main.model.BaseOfProduct;
 import main.model.Product;
@@ -32,10 +34,23 @@ public class DisplayLCDTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
+		List<Product> baseOfProducts = new LinkedList<Product>();
+        Product[] products = {
+	            new Product(1, "Jajka", 10.0,new BarCode("11")),
+	            new Product(2, "Mleko", 12.0,new BarCode("12")),
+	            new Product(3, "Woda",5.5,  new BarCode("13")),
+	            new Product(4, "Baton", 10.0,new BarCode("14")),
+	            new Product(5, "Chipsy", 12.0,new BarCode("15")),
+	            new Product(6, "Ryz",5.5,  new BarCode("16")),
+	            new Product(7, "Sprite",3.2,  new BarCode("17"))
+	    };
+        for (int i = 0; i < products.length; i++) {
+            baseOfProducts.add(products[i]);
+        }
 		barCodeDevice = new BarCodeDevice();
 		display = new DisplayLCD();
 		receipt = new Receipt();
-		baseOfProduct = new BaseOfProduct(getProductTable());
+		baseOfProduct = new BaseOfProduct(baseOfProducts);
 	}
 	
 	@Before
@@ -52,17 +67,17 @@ public class DisplayLCDTest {
 	}
 	
 	@Test (expected = InvalidBarCodeException.class)
-	public void shouldShowErrorInvalidBarCode() throws InvalidBarCodeException, ProductNotFoundException {
+	public void testShowErrorInvalidBarCode() throws InvalidBarCodeException, ProductNotFoundException {
 		scan("");
 	}
 	
 	@Test (expected = ProductNotFoundException.class)
-	public void shouldShowErrorProductNotFound() throws InvalidBarCodeException, ProductNotFoundException {
+	public void testShowErrorProductNotFound() throws InvalidBarCodeException, ProductNotFoundException {
 		scan("88");
 	}
 	
 	@Test
-	public void checkReceipt() throws InvalidBarCodeException, ProductNotFoundException {
+	public void testSumReceipt() throws InvalidBarCodeException, ProductNotFoundException {
 		//when
 		scan("11");
 		scan("12");
@@ -75,47 +90,29 @@ public class DisplayLCDTest {
 	}
 	
 	@Test
-	public void checkExitInput() throws InvalidBarCodeException, ProductNotFoundException {
+	public void testExitInput() throws InvalidBarCodeException, ProductNotFoundException {
 		//when
 		scan("11");
 		scan("12");
 		scan("exit");
-		 String printStreamExpected = new StringBuilder()
-	                .append("Jajka")
-	                .append(main.devices.output.MessageOutPutDevice.TAB)
-	                .append(10.0)
-	                .append("\n")
-	                .append("Mleko")
-	                .append(main.devices.output.MessageOutPutDevice.TAB)
-	                .append(12.0)
-	                .append("\n")
-
-	                .append(main.devices.output.MessageOutPutDevice.SUMA+
-	                		main.devices.output.MessageOutPutDevice.TAB+
-	                		receipt.getSumPrice().toString())
-	                .append("\n")
-	                .toString();
+		String printStreamExpected = new StringBuilder()
+				.append("Jajka")
+				.append(main.devices.output.MessageOutputDevice.TAB)
+				.append(10.0)
+				.append("\n")
+	            .append("Mleko")
+	            .append(main.devices.output.MessageOutputDevice.TAB)
+	            .append(12.0)
+	            .append("\n")
+	            .append(main.devices.output.MessageOutputDevice.SUMA)
+	            .append(main.devices.output.MessageOutputDevice.TAB)
+	            .append(receipt.getSumPrice().toString())
+	            .append("\n")
+	            .toString();
 		//then
-		 assertThat(receipt.getSumPrice()).isEqualTo(22);
-		 assertThat(byteArrayOutputStream.toString()).isEqualTo(printStreamExpected);
+		 assertEquals(byteArrayOutputStream.toString(),printStreamExpected);
 	}
-	
-	
-
-	public void checkOperation(String inputBarCode){
-		try{
-			scan(inputBarCode);
-		}
-		catch(InvalidBarCodeException e)
-		{
-			display.showMessageInvalidBarCode();
-		}
-		catch(ProductNotFoundException e)
-		{
-			display.showMessageProductNotFound();
-		}
-	}
-	
+		
 	private void scan(String inputBarCode) throws InvalidBarCodeException, ProductNotFoundException{
 		BarCode barCode =barCodeDevice.readBarcode(inputBarCode);
 		if(barCode.equals(main.system.PointOfSale.EXIT_CODE)){
@@ -126,22 +123,4 @@ public class DisplayLCDTest {
 		receipt.addProduct(product);
 		display.showProduct(product);
 	}
-	
-	public static Map<Integer, Product> getProductTable(){
-        Map<Integer, Product> baseOfProducts = new HashMap<>();
-        Product[] products = {
-	            new Product(1, "Jajka", 10.0,new BarCode("11")),
-	            new Product(2, "Mleko", 12.0,new BarCode("12")),
-	            new Product(3, "Woda",5.5,  new BarCode("13")),
-	            new Product(4, "Baton", 10.0,new BarCode("14")),
-	            new Product(5, "Cipsy", 12.0,new BarCode("15")),
-	            new Product(6, "Ryz",5.5,  new BarCode("16")),
-	            new Product(7, "Sprite",3.2,  new BarCode("17"))
-	    };
-        for (int i = 0; i < products.length; i++) {
-            baseOfProducts.put((int) i, products[i]);
-        }
-        return baseOfProducts;
-    }
-	
 }

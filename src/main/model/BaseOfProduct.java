@@ -1,26 +1,20 @@
 package main.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import main.exception.ProductNotFoundException;
 
 public class BaseOfProduct implements main.model.BaseOfProductInterface {
 
-	
-	private Map<Integer, Product> hashMapOfProduct = new HashMap<Integer,Product>();
-
-	    public BaseOfProduct(Map<Integer, Product> hashMapOfProduct) {
-	        this.hashMapOfProduct = hashMapOfProduct;
+	List<Product> listOfProducts;
+	    public BaseOfProduct(List<Product> hashMapOfProduct) {
+	        this.listOfProducts = hashMapOfProduct;
 	    }
-	
-	
+	    
 	@Override
 	public Product findProduct(BarCode barCode) throws ProductNotFoundException {
-		
 		Product foundProduct = null;
-		
-        for(Product product : hashMapOfProduct.values()) {
+        for(Product product : listOfProducts) {
             if (product.getBarCode().equals(barCode)) {
                 foundProduct = product;
                 break;
@@ -30,7 +24,5 @@ public class BaseOfProduct implements main.model.BaseOfProductInterface {
         	throw new ProductNotFoundException("Product barcode="+barCode+" not found");
         }
 		return foundProduct;
-        
-       
 	}
 }

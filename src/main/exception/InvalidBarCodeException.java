@@ -9,7 +9,6 @@ public class InvalidBarCodeException extends Exception {
 	}
 	
 	public String toString(){
-		return "Invalid bar-code ["+detail+"]";
-	}
-	
+		return "InvalidBarCodeException [" + detail + "]";
+	}	
 }

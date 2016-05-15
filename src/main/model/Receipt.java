@@ -1,12 +1,11 @@
 package main.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
 
 public class Receipt implements ReceiptInterface {
 
-	private List<Product> products = new ArrayList<Product>();
+	private List<Product> products = new LinkedList<Product>();
 	private Double sum=0.0;
 	
 	@Override
@@ -24,6 +23,4 @@ public class Receipt implements ReceiptInterface {
 		products.add(product);
 		sum+=product.getPrice();
 	}
-
-	
 }

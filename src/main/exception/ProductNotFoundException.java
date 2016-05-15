@@ -9,7 +9,6 @@ public class ProductNotFoundException extends Exception {
 	}
 	
 	public String toString(){
-		return "ProductNotFoundExceptions ["+detail+"]";
+		return "ProductNotFoundExceptions [" + detail + "]";
 	}
-	
 }

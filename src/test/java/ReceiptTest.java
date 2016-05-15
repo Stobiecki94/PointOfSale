@@ -1,24 +1,20 @@
 package test.java;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-
 import org.junit.Test;
-
 
 import main.model.Product;
 import main.model.Receipt;
 
 public class ReceiptTest {
   
-	private static Product product1;
-    private static Product product2;
-    private static Product product3;
-    private static Product product4;
+	private static Product product1, product2, product3, product4;
     private static Receipt receipt;
 
     @BeforeClass
@@ -43,21 +39,32 @@ public class ReceiptTest {
     }
     
     @Before
-    public void setUp(){
+    public void setUpBefore(){
     	receipt=new Receipt();
     }
 
     @Test
-    public void shouldAddProduct() {
+    public void testAddProduct() {
         //when
         receipt.addProduct(product1);
         //then
-        assertThat(receipt.getAll().get(0)).isEqualTo(product1);
+        assertEquals(receipt.getAll().get(0),product1);
         assertThat(receipt.getSumPrice()).isEqualTo(2.00);
+    }
+    
+    @Test
+    public void testAddProducts() {
+        //when
+        receipt.addProduct(product1);
+        receipt.addProduct(product2);
+        receipt.addProduct(product3);
+        receipt.addProduct(product4);
+        //then
+        assertThat(receipt.getAll().size()).isEqualTo(4);
     }
 
     @Test
-    public void shouldAddAllProducts() {
+    public void testAddAllPrices() {
         //when
         receipt.addProduct(product1);
         receipt.addProduct(product2);
@@ -65,6 +72,5 @@ public class ReceiptTest {
         receipt.addProduct(product4);
         //then
         assertThat(receipt.getSumPrice()).isEqualTo(29.95);
-        assertThat(receipt.getAll().size()).isEqualTo(4);
     }
 }
